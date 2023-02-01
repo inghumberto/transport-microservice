@@ -1,0 +1,822 @@
+openapi: 3.0.1
+info:
+  title: Bus Transport API Information
+  description: Ejemplo de API REST
+  contact:
+    name: Francisco Jesus Moya Olivares
+    url: https://datos.codeandcoke.com
+    email: fjmo852@gmail.com
+  version: "1.0"
+servers:
+- url: http://localhost:8083
+  description: Generated server url
+tags:
+- name: Pasajeros
+  description: Listado de los Pasajeros
+- name: Autobuses
+  description: Listado de autobuses
+- name: Paradas de Autobus
+  description: Listado de autobuses
+- name: Lineas
+  description: Listado de Lineas
+paths:
+  /passengers:
+    get:
+      tags:
+      - Pasajeros
+      summary: Obtiene el listado de pasajeros
+      operationId: getPassengers
+      responses:
+        "200":
+          description: Listado de pasajeros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Passenger'
+    put:
+      tags:
+      - Pasajeros
+      summary: actualiza un pasajero
+      operationId: modifyPassanger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Passenger'
+        required: true
+      responses:
+        "404":
+          description: el pasajero no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se actualizo el pasajero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Passenger'
+    post:
+      tags:
+      - Pasajeros
+      summary: Almacena un pasajero
+      operationId: addPassenger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Passenger'
+        required: true
+      responses:
+        "409":
+          description: este pasajero ya existe en la base de datos
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Response'
+        "201":
+          description: pasajero almacenado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Passenger'
+  /lines:
+    get:
+      tags:
+      - Lineas
+      summary: Obtiene el listado de Lineas
+      operationId: getLines
+      responses:
+        "200":
+          description: Listado de Lineas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Line'
+    put:
+      tags:
+      - Lineas
+      summary: actualiza una linea
+      operationId: modifyLine
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Line'
+        required: true
+      responses:
+        "200":
+          description: Se actualizo la linea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Line'
+        "404":
+          description: La linea no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+    post:
+      tags:
+      - Lineas
+      summary: Almacena una linea
+      operationId: addLine
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Line'
+        required: true
+      responses:
+        "201":
+          description: linea almacenada
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Line'
+        "409":
+          description: esta linea ya existe en la base de datos
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Response'
+  /buses:
+    get:
+      tags:
+      - Autobuses
+      summary: Obtiene el listado de Autobuses
+      operationId: getBuses
+      responses:
+        "200":
+          description: Listado de autobuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bus'
+    put:
+      tags:
+      - Autobuses
+      summary: actualiza un autobus
+      operationId: modifyBus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bus'
+        required: true
+      responses:
+        "404":
+          description: El autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se actualizo el autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+    post:
+      tags:
+      - Autobuses
+      summary: Almacena un autobus
+      operationId: addBus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bus'
+        required: true
+      responses:
+        "201":
+          description: Autobus almacenado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Bus'
+        "409":
+          description: Autobus ya existe en la base de datos
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Response'
+  /busStops:
+    get:
+      tags:
+      - Paradas de Autobus
+      summary: Obtiene el listado de paradas de autobus
+      operationId: getBusStops
+      responses:
+        "200":
+          description: Listado de paradas de autobus
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BusStop'
+    put:
+      tags:
+      - Paradas de Autobus
+      summary: actualiza una parada de autobus
+      operationId: modifyBusStop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusStop'
+        required: true
+      responses:
+        "404":
+          description: La parada de autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se actualizo la parada de autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusStop'
+    post:
+      tags:
+      - Paradas de Autobus
+      summary: Almacena una parada de autobus
+      operationId: addBusStop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusStop'
+        required: true
+      responses:
+        "201":
+          description: parada de autobus almacenado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BusStop'
+        "409":
+          description: parada de autobus ya existe en la base de datos
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Response'
+  /passengers/{id}/change-name:
+    patch:
+      tags:
+      - Pasajeros
+      summary: actualiza el nombre de un pasajero
+      operationId: modifyPassengerName
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: Se actualizo el nombre del pasajero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Passenger'
+        "404":
+          description: El pasajero no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /lines/{id}/change-name:
+    patch:
+      tags:
+      - Lineas
+      summary: actualiza el nombre una linea
+      operationId: modifyLineName
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "404":
+          description: La linea no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se actualizo el nombre de la linea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Line'
+  /buses/{id}/change-code:
+    patch:
+      tags:
+      - Autobuses
+      summary: actualiza el codigo un autobus
+      operationId: modifybusCode
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "404":
+          description: El autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se actualizo el codigo del autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+  /busStops/{id}/change-name:
+    patch:
+      tags:
+      - Paradas de Autobus
+      summary: actualiza el nombre una parada de autobus
+      operationId: modifybusStopName
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "404":
+          description: La parada de autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se actualizo el nombre de la parada de autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusStop'
+  /passengerByid={id}:
+    get:
+      tags:
+      - Pasajeros
+      summary: Obtiene un pasajero por su id
+      operationId: getPassengerById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Existe el pasajero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Passenger'
+        "404":
+          description: El pasajero no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /lineByid={id}:
+    get:
+      tags:
+      - Lineas
+      summary: Obtiene una linea por su id
+      operationId: getLineById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "404":
+          description: La linea no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Existe la linea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Line'
+  /busescostume/capacity={capacity},code={code},consumption={consumption}:
+    get:
+      tags:
+      - Autobuses
+      summary: Obtiene un autobus por su id
+      operationId: getBusByCapacityandConsumptionandcode
+      parameters:
+      - name: capacity
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: consumption
+        in: path
+        required: true
+        schema:
+          type: number
+          format: float
+      responses:
+        "404":
+          description: El autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Existe el autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+  /busesByid={id}:
+    get:
+      tags:
+      - Autobuses
+      summary: Obtiene un autobus por su id
+      operationId: getBusById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "404":
+          description: El autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Existe el autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+  /busStopByid={id}:
+    get:
+      tags:
+      - Paradas de Autobus
+      summary: Obtiene una parada de autobus por su id
+      operationId: getBusStopById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Existe la paradas de autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusStop'
+        "404":
+          description: La paradas de autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /passengers/{id}:
+    delete:
+      tags:
+      - Pasajeros
+      summary: Elimina un pasajero
+      operationId: deletePassenger
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Se elimina el pasajero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "404":
+          description: el pasajero no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /lines/{id}:
+    delete:
+      tags:
+      - Lineas
+      summary: Elimina una linea
+      operationId: deleteLine
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Se elimina la linea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "404":
+          description: La linea no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /busesStop/{id}:
+    delete:
+      tags:
+      - Paradas de Autobus
+      summary: Elimina una parada de autobus
+      operationId: deleteBusStop
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Se elimina la parada de autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "404":
+          description: La parada de autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /buses/{id}:
+    delete:
+      tags:
+      - Autobuses
+      summary: Elimina un autobus
+      operationId: deleteBus
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "404":
+          description: El autobus no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "200":
+          description: Se elimina el autobus
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+components:
+  schemas:
+    Bus:
+      required:
+      - buydate
+      - capacity
+      - code
+      - consumption
+      - doublebus
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+          description: numero de identificacion unico en la base de datos
+          format: int32
+          example: 542
+        code:
+          type: string
+          description: ccodigo de identificacion del autobus
+          example: E-11
+        doublebus:
+          type: boolean
+          description: "identifica el autobus como uno de cuerpo simple o cuerpo doble,\
+            \ sera tru si es doble false si es simple"
+          example: true
+        buydate:
+          type: string
+          description: fecha de adquisicion de autobus
+          format: date
+          example: 2015-01-01
+        consumption:
+          type: number
+          description: litros de consumo de combustible cada 100 km
+          format: float
+        capacity:
+          type: integer
+          description: cantidad de pasajeros maxima que puede transporta el autobus
+          format: int32
+          example: 80
+        line:
+          $ref: '#/components/schemas/Line'
+        passengerSet:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Passenger'
+    Line:
+      required:
+      - active
+      - color
+      - creation
+      - id
+      - name
+      - size
+      type: object
+      properties:
+        id:
+          type: integer
+          description: numero de identificacion unico en la base de datos
+          format: int32
+          example: 25
+        name:
+          type: string
+          description: nombre de la linea
+          example: Jarazmín - El Palo
+        size:
+          type: number
+          description: largo del recorrido de la linea en km
+          format: float
+        active:
+          type: boolean
+          description: estado de la linea
+          example: true
+        creation:
+          type: string
+          format: date-time
+        color:
+          type: string
+          description: color representatibo de la linea en los mapas
+          example: rojo
+    Passenger:
+      required:
+      - age
+      - distancebetweenhomestopbus
+      - id
+      - inscriptiondate
+      - name
+      - premium
+      type: object
+      properties:
+        id:
+          type: integer
+          description: numero de identificacion unico en la base de datos
+          format: int32
+          example: 15
+        premium:
+          type: boolean
+          description: identifica a los clientes que han obtenido un bono premium
+            de los que usan el transporte de forma anonima
+          example: true
+        inscriptiondate:
+          type: string
+          description: fecha en la que el cliente obtubo el bono premium
+          format: date
+          example: 2015-01-01
+        name:
+          type: string
+          description: nombre del cliente
+          example: Francisco Jesus Moya Olivares
+        age:
+          type: integer
+          description: edad del cliente a fecha de obtencion del bono premium
+          format: int32
+          example: 26
+        distancebetweenhomestopbus:
+          type: number
+          description: distancia entre la casa del cliente y la parada mas cercana
+          format: float
+          example: 25.4
+        busSet:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Bus'
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int64
+        message:
+          type: string
+    Response:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    BusStop:
+      required:
+      - covering
+      - creation
+      - id
+      - name
+      - seat
+      - size
+      type: object
+      properties:
+        id:
+          type: integer
+          description: numero de identificacion unico en la base de datos
+          format: int32
+          example: 25
+        name:
+          type: string
+          description: Nombre de la parada
+          example: Atocha
+        seat:
+          type: integer
+          description: cantidad de asientos de la parada
+          format: int32
+          example: 5
+        size:
+          type: number
+          description: area des area de la paradaen metros
+          format: float
+        creation:
+          type: string
+          description: fecha de la construccion de la parada
+          format: date
+          example: 2015-01-01
+        covering:
+          type: boolean
+          description: especifica si la parada tiene techado o no
+          example: true
